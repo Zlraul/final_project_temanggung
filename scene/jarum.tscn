@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://pkhlkkjwkgrm"]
+
+[ext_resource type="Texture2D" uid="uid://dlsa2iymnuvyb" path="res://assets/Free/Traps/Spikes/Idle.png" id="1_ok148"]
+[ext_resource type="PackedScene" uid="uid://cae3vjrqlea04" path="res://scene/KillZone.tscn" id="2_sc4dd"]
+
+[node name="jarum" type="Node2D" unique_id=452225410]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1356793564]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("1_ok148")
+
+[node name="KillZone" parent="." unique_id=408368270 instance=ExtResource("2_sc4dd")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="KillZone" unique_id=2046606016]
+scale = Vector2(2, 2)
+polygon = PackedVector2Array(-5, 1, -5, 2, -6, 2, -6, 4, -7, 4, -7, 6, -8, 6, -8, 8, -1, 8, -1, 7, 0, 7, 0, 8, 7, 8, 7, 7, 7, 6, 6, 6, 6, 4, 5, 4, 5, 2, 4, 2, 4, 1, 3, 1, 3, 2, 2, 2, 2, 4, 1, 4, 1, 6, 0, 6, -1, 6, -2, 6, -2, 4, -3, 4, -3, 2, -4, 2, -4, 1)

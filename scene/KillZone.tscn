@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cae3vjrqlea04"]
+
+[sub_resource type="GDScript" id="GDScript_wrywd"]
+script/source = "extends Area2D
+
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.has_method(\"is_player\"):
+		get_tree().call_deferred(\"reload_current_scene\")
+"
+
+[node name="KillZone" type="Area2D" unique_id=408368270]
+script = SubResource("GDScript_wrywd")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
