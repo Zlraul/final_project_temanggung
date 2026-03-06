@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dgpclgjn5q7es"]
 
 [ext_resource type="Texture2D" uid="uid://dvss4ymmeqjf3" path="res://assets/WarriorMan-Sheet.png" id="1_3x35j"]
+[ext_resource type="Script" uid="uid://btg22qrrihta5" path="res://Scripts/newplayer.gd" id="1_k8rrn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k8rrn"]
 atlas = ExtResource("1_3x35j")
@@ -98,10 +99,6 @@ region = Rect2(240, 256, 80, 64)
 atlas = ExtResource("1_3x35j")
 region = Rect2(320, 256, 80, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_w420j"]
-atlas = ExtResource("1_3x35j")
-region = Rect2(400, 256, 80, 64)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_sdelk"]
 animations = [{
 "frames": [{
@@ -191,12 +188,20 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7s5o7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_w420j")
 }],
 "loop": false,
 "name": &"melompat",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x2uf3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7s5o7")
+}],
+"loop": true,
+"name": &"melompat_2",
 "speed": 10.0
 }]
 
@@ -206,13 +211,14 @@ height = 18.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1300015731]
 texture_filter = 1
+script = ExtResource("1_k8rrn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1324355435]
 position = Vector2(-3, 0)
 sprite_frames = SubResource("SpriteFrames_sdelk")
-animation = &"berlari"
+animation = &"melompat_2"
 autoplay = "berdiri"
-frame_progress = 0.09371345
+frame_progress = 0.1895832
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=966378259]
 position = Vector2(1, 7)

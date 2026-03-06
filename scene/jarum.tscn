@@ -3,14 +3,30 @@
 [ext_resource type="Texture2D" uid="uid://dlsa2iymnuvyb" path="res://assets/Free/Traps/Spikes/Idle.png" id="1_ok148"]
 [ext_resource type="PackedScene" uid="uid://cae3vjrqlea04" path="res://scene/KillZone.tscn" id="2_sc4dd"]
 
+[sub_resource type="GDScript" id="GDScript_ok148"]
+script/source = "extends Node2D
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	position.x -= Global.speed * delta
+"
+
 [node name="jarum" type="Node2D" unique_id=452225410]
+script = SubResource("GDScript_ok148")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1356793564]
 texture_filter = 1
+position = Vector2(0, -16)
 scale = Vector2(2, 2)
 texture = ExtResource("1_ok148")
 
 [node name="KillZone" parent="." unique_id=408368270 instance=ExtResource("2_sc4dd")]
+position = Vector2(0, -16)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="KillZone" unique_id=2046606016]
 scale = Vector2(2, 2)

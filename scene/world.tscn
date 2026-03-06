@@ -113,7 +113,7 @@ func _physics_process(delta: float) -> void:
 	if velocity.y > 0.0 and not is_on_floor():
 		animasi.play(\"jatuh\")
 	
-	print(velocity.y)
+	#print(velocity.y)
 #
 	## Get the input direction and handle the movement/deceleration.
 	## As good practice, you should replace UI actions with custom gameplay actions.
@@ -127,6 +127,13 @@ func _physics_process(delta: float) -> void:
 
 func is_player():
 	pass
+	
+func _unhandled_input(event: InputEvent) -> void:
+	if event:
+		if Input.is_action_just_pressed(\"lompat\"):
+			print(\"lompat pressed\")
+		if Input.is_action_just_released(\"lompat\"):
+			print(\"Lompat Released\")
 "
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_m5mgf"]
