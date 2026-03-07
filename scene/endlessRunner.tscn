@@ -1,7 +1,32 @@
 [gd_scene format=4 uid="uid://i2ek2ywt8gly"]
 
+[ext_resource type="Texture2D" uid="uid://duuyci4pxochp" path="res://assets/TileSet Wasteland/Layers/Background.png" id="1_pj7wd"]
 [ext_resource type="Texture2D" uid="uid://dw5ixa37sf63p" path="res://assets/TileSet Wasteland/TileSet_Wasteland.png" id="1_smkx7"]
+[ext_resource type="Texture2D" uid="uid://dyu2oewccx6qs" path="res://assets/TileSet Wasteland/Layers/Clouds.png" id="2_0h7q8"]
 [ext_resource type="PackedScene" uid="uid://dgpclgjn5q7es" path="res://scene/character.tscn" id="3_5xo84"]
+[ext_resource type="Texture2D" uid="uid://dw8hl3s6vur60" path="res://assets/TileSet Wasteland/Layers/Far-Mountains.png" id="3_i1txg"]
+[ext_resource type="Texture2D" uid="uid://c2mjmondsqbcs" path="res://assets/TileSet Wasteland/Layers/Mountains.png" id="4_x8wn8"]
+
+[sub_resource type="GDScript" id="GDScript_pj7wd"]
+script/source = "extends Node2D
+@onready var sky: Parallax2D = $sky
+@onready var cloud: Parallax2D = $cloud
+@onready var mountain_1: Parallax2D = $mountain1
+@onready var mountain_2: Parallax2D = $mountain2
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	cloud.scroll_offset.x += (-Global.speed*0.005) * delta
+	mountain_1.scroll_offset.x += (-Global.speed*0.02) * delta
+	mountain_2.scroll_offset.x += (-Global.speed*0.07) * delta
+	
+"
 
 [sub_resource type="GDScript" id="GDScript_eiccc"]
 script/source = "extends Parallax2D
@@ -117,13 +142,22 @@ sources/0 = SubResource("TileSetAtlasSource_eiccc")
 [sub_resource type="GDScript" id="GDScript_5xo84"]
 script/source = "extends Node2D
 @onready var timer: Timer = $Timer
+#untuk preload dari scene ukuran jarum
 var array := [
 	preload(\"res://scene/jarum.tscn\"),
 	preload(\"res://scene/jarum2.tscn\"),
 	preload(\"res://scene/jarum3.tscn\"),
 	preload(\"res://scene/jarum4.tscn\")
 ]
-
+#array menyimpan jangka waktu agar dapat di sesuaikan dengan jarum yang ter spawn
+var arrayTime := [
+	Vector2(0.6,1.0),
+	Vector2(1.0,1.5),
+	Vector2(1.2,1.8)
+]
+# fungsi kerjanya jika yang terpilih untuk di spawn adalah jarum 2 atau array[1] maka jangka waktu
+# spawn selanjutnya adalah arraytime[1] agar tidak terjadinya jarak yang terlalu pendek untuk
+# jarum yang panjang
 func _ready() -> void:
 	pass
 	
@@ -135,23 +169,89 @@ func _process(delta: float) -> void:
 
 
 func _on_timer_timeout() -> void:
-	print(\"spawn stuff\")
-	var jarum = array[randi_range(0,2)]
+	var num = randi_range(0,2)
+	printt(\"spawn stuff\", arrayTime[num])
+	var jarum = array[num]
 	var spawn = jarum.instantiate()
 	add_child(spawn)
-	rando()
+	rando(num)
 	
 	
 
-func rando():
-	var wait = randf_range(0.5,2.0)
+func rando(nums):
+	var wait = randf_range(arrayTime[nums].x,arrayTime[nums].y)
 	timer.start(wait)
 	print(\"intervale : \", str(timer.wait_time))
 	
 	
 "
 
+[sub_resource type="GDScript" id="GDScript_0h7q8"]
+script/source = "extends Control
+
+@onready var label: Label = $ColorRect/Label
+
+var counter := 0
+var score := 1
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	counter = 0
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	counter += 1
+	if counter % 100 == 0:
+		score += 1
+	label.text = \"score %d\" %score
+	Global.score = score
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pj7wd"]
+bg_color = Color(1, 1, 1, 0.45882353)
+expand_margin_left = 8.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_i1txg"]
+font_size = 10
+font_color = Color(0, 0, 0, 1)
+
 [node name="Node2D" type="Node2D" unique_id=1192757598]
+
+[node name="background" type="Node2D" parent="." unique_id=558909143]
+position = Vector2(320, 191)
+script = SubResource("GDScript_pj7wd")
+
+[node name="sky" type="Parallax2D" parent="background" unique_id=1317668978]
+repeat_size = Vector2(640, 0)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="background/sky" unique_id=573796183]
+texture = ExtResource("1_pj7wd")
+
+[node name="cloud" type="Parallax2D" parent="background" unique_id=1970293710]
+scroll_offset = Vector2(0, 22)
+repeat_size = Vector2(640, 0)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="background/cloud" unique_id=2046586387]
+position = Vector2(0, 2)
+texture = ExtResource("2_0h7q8")
+
+[node name="mountain1" type="Parallax2D" parent="background" unique_id=2002834431]
+scroll_offset = Vector2(0, 14)
+repeat_size = Vector2(640, 0)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="background/mountain1" unique_id=1524689318]
+texture = ExtResource("3_i1txg")
+
+[node name="mountain2" type="Parallax2D" parent="background" unique_id=278322112]
+scroll_offset = Vector2(0, 60)
+repeat_size = Vector2(640, 0)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="background/mountain2" unique_id=1261907730]
+texture = ExtResource("4_x8wn8")
 
 [node name="Node" type="Node2D" parent="." unique_id=1404446942]
 position = Vector2(0, 137)
@@ -187,5 +287,32 @@ script = SubResource("GDScript_5xo84")
 
 [node name="Timer" type="Timer" parent="Spawner" unique_id=1252828086]
 autostart = true
+
+[node name="scorecounter" type="Control" parent="." unique_id=937526900]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 426.0
+offset_right = 426.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_0h7q8")
+
+[node name="ColorRect" type="PanelContainer" parent="scorecounter" unique_id=1836951184]
+layout_mode = 1
+offset_left = 82.0
+offset_right = 150.0
+offset_bottom = 24.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pj7wd")
+
+[node name="Label" type="Label" parent="scorecounter/ColorRect" unique_id=122738627]
+layout_mode = 2
+text = "Score "
+label_settings = SubResource("LabelSettings_i1txg")
+vertical_alignment = 1
+
+[node name="Node2" type="Node2D" parent="." unique_id=1345769811]
+position = Vector2(288, 162)
 
 [connection signal="timeout" from="Spawner/Timer" to="Spawner" method="_on_timer_timeout"]

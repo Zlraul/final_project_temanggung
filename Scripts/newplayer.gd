@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 @onready var animasi: AnimatedSprite2D = $AnimatedSprite2D
 
-const SHORT_JUMP_VELOCITY = -250.0  # untuk lompat pendek
-const MAX_JUMP_VELOCITY = -450.0    # untuk lompat jauh 
+const SHORT_JUMP_VELOCITY = -220.0  # untuk lompat pendek
+const MAX_JUMP_VELOCITY = -350.0    # untuk lompat jauh 
 var GRAVITY = 980.0                 # gravitasi normal
 var JUMP_HOLD_GRAVITY = 350.0       # gravitasi untuk lompat jauh
 
@@ -61,6 +61,6 @@ func handle_jump() -> void:
 	# lalu variabel is_jumping di ganti menjadi true, lalu animasi yang
 	# di mainkan adalah animasi melompat.
 	
-func is_players(): # bagian ini untuk menandakan bahwa node ini adalah pelayer
+func is_player(): # bagian ini untuk menandakan bahwa node ini adalah pelayer
 	pass
 	
